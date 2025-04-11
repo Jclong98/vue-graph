@@ -22,6 +22,6 @@ const graph = ref<Graph>({ nodes, edges })
 
 <template>
   <div>
-    <JGraph v-model="graph" />
+    <JGraph v-model="graph" class="h-full w-full" />
   </div>
 </template>

@@ -7,7 +7,7 @@ const props = defineModel<Graph>({ required: true })
 </script>
 
 <template>
-  <svg class="j-graph">
+  <svg>
     <JGraphEdge
       v-for="(edge, index) in props.edges"
       :key="`${edge.source}-${edge.target}`"
@@ -23,10 +23,3 @@ const props = defineModel<Graph>({ required: true })
     />
   </svg>
 </template>
-
-<style lang="css" scoped>
-.j-graph {
-  width: 100%;
-  height: 100%;
-}
-</style>
