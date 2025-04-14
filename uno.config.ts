@@ -1,4 +1,4 @@
-import { defineConfig, presetWind4, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetWind4, transformerVariantGroup, presetIcons } from 'unocss'
 
 const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'pink', 'gray', 'cyan']
 const colorValues = ['100', '200', '300', '400', '500', '600', '700', '800', '900']
@@ -13,7 +13,7 @@ const safeList = colors.flatMap((color) =>
 )
 
 export default defineConfig({
-  presets: [presetWind4()],
+  presets: [presetWind4(), presetIcons()],
   transformers: [transformerVariantGroup()],
   shortcuts: {
     btn: 'px-6 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700',

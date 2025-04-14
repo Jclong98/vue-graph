@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@iconify-json/iconoir':
+        specifier: ^1.2.7
+        version: 1.2.7
       '@unocss/reset':
         specifier: 66.1.0-beta.10
         version: 66.1.0-beta.10
@@ -444,6 +447,9 @@ packages:
   '@humanwhocodes/retry@0.4.2':
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/iconoir@1.2.7':
+    resolution: {integrity: sha512-UDlx2WeWHqopfKRsjOta6fn/KkOhF0MmI2AxoYfakqtMLlznkTnrtY9QVuXZzsbvk+Gyavq2L39VjhcxGbt+LA==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2377,6 +2383,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.1': {}
 
   '@humanwhocodes/retry@0.4.2': {}
+
+  '@iconify-json/iconoir@1.2.7':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
 

@@ -63,5 +63,14 @@ const colors = computed(() => {
     >
       {{ modelValue.label }}
     </text>
+    <text
+      v-if="modelValue.id"
+      class="pointer-events-none"
+      :x="modelValue.x"
+      :y="modelValue.y"
+      text-anchor="middle"
+    >
+      {{ modelValue.id }}
+    </text>
   </g>
 </template>

@@ -5,29 +5,57 @@ import type { Edge, Graph, Node } from '@/components/JGraph'
 import { ref } from 'vue'
 
 const nodes: Node[] = [
+  createNode({ id: '_start', x: 50, y: 250, label: 'Start', color: 'green' }),
   createNode({ id: '1', x: 100, y: 250, label: 'Spark Bolt', color: 'blue' }),
   createNode({ id: '2', x: 200, y: 250, label: 'Spark Bolt with Trigger', color: 'yellow' }),
-  createNode({ id: '2.1', x: 250, y: 150 }),
-  createNode({ id: '2.1', x: 300, y: 250, color: 'cyan', label: 'Double Spell' }),
-  createNode({ id: '2.1', x: 500, y: 100, color: 'blue', label: 'Spark Bolt' }),
-  createNode({ id: '2.1', x: 500, y: 400, color: 'blue', label: 'Spark Bolt' }),
-  createNode({ id: '2.1', x: 600, y: 250 }),
+  createNode({ id: '3', x: 250, y: 150 }),
+  createNode({ id: '4', x: 300, y: 250, color: 'cyan', label: 'Double Spell' }),
+  createNode({ id: '5', x: 500, y: 100, color: 'blue', label: 'Spark Bolt' }),
+  createNode({ id: '6', x: 500, y: 400, color: 'blue', label: 'Spark Bolt' }),
+  createNode({ id: '7', x: 600, y: 250 }),
 ]
 
+function nodeById(id: string): Node {
+  const node = nodes.find((node) => node.id === id)
+  if (!node) throw new Error(`Node with id ${id} not found`)
+  return node
+}
+
 const edges: Edge[] = [
-  createEdge({ source: nodes[0], target: nodes[1], width: 2 }),
-  createEdge({ source: nodes[1], target: nodes[2], color: 'green', label: 'payload' }),
-  createEdge({ source: nodes[1], target: nodes[3], width: 2 }),
-  createEdge({ source: nodes[3], target: nodes[4], color: 'green' }),
-  createEdge({ source: nodes[3], target: nodes[5], color: 'green' }),
-  createEdge({ source: nodes[3], target: nodes[6], width: 2 }),
+  // main line edges
+  createEdge({ source: nodeById('_start'), target: nodeById('1'), width: 2 }),
+  createEdge({ source: nodeById('1'), target: nodeById('2'), width: 2 }),
+  createEdge({ source: nodeById('2'), target: nodeById('4'), width: 2 }),
+  createEdge({ source: nodeById('4'), target: nodeById('7'), width: 2 }),
+
+  // splitter/payload edges
+  createEdge({ source: nodeById('2'), target: nodeById('3'), color: 'green' }),
+  createEdge({ source: nodeById('4'), target: nodeById('5'), color: 'green' }),
+  createEdge({ source: nodeById('4'), target: nodeById('6'), color: 'green' }),
 ]
 
 const graph = ref<Graph>({ nodes, edges })
+
+const id1 = ref('')
+const id2 = ref('')
+function addEdge() {
+  const source = nodeById(id1.value)
+  const target = nodeById(id2.value)
+  graph.value.edges.push(createEdge({ source, target }))
+  id1.value = ''
+  id2.value = ''
+}
 </script>
 
 <template>
-  <div>
-    <JGraph v-model="graph" class="h-full w-full" />
+  <div class="h-full w-full flex-col flex">
+    <div class="flex gap-2 p-2">
+      <input type="text" v-model="id1" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <i class="i-iconoir-arrow-right self-center"></i>
+      <input type="text" v-model="id2" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <button class="btn" @click="addEdge">add edge</button>
+    </div>
+
+    <JGraph v-model="graph" class="flex-1" />
   </div>
 </template>
