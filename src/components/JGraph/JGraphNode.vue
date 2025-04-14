@@ -3,6 +3,10 @@ import { useMouse, useMousePressed, useRafFn } from '@vueuse/core'
 import type { Node } from './'
 import { computed, reactive, useTemplateRef, watch } from 'vue'
 
+const emit = defineEmits<{
+  delete: []
+}>()
+
 const modelValue = defineModel<Node>({ required: true })
 
 const cirlceElement = useTemplateRef('circleElement')
@@ -72,5 +76,13 @@ const colors = computed(() => {
     >
       {{ modelValue.id }}
     </text>
+    <circle
+      :cx="modelValue.x + modelValue.radius"
+      :cy="modelValue.y - modelValue.radius"
+      r="10"
+      fill="transparent"
+      class="cursor-pointer hover:fill-red-400 active:fill-red-600"
+      @click="emit('delete')"
+    />
   </g>
 </template>

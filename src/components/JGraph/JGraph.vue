@@ -34,6 +34,15 @@ useRafFn(() => {
     }
   }
 })
+
+function onNodeDelete(index: number) {
+  // remove the node and its edges
+  const nodeId = modelValue.value.nodes[index].id
+  modelValue.value.nodes.splice(index, 1)
+  modelValue.value.edges = modelValue.value.edges.filter(
+    (edge) => edge.source.id !== nodeId && edge.target.id !== nodeId,
+  )
+}
 </script>
 
 <template>
@@ -51,6 +60,7 @@ useRafFn(() => {
       :key="node.id"
       :model-value="node"
       @update:model-value="modelValue.nodes[index] = $event"
+      @delete="onNodeDelete(index)"
     />
   </svg>
 </template>
