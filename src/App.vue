@@ -8,6 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <div class="wrapper">
         <nav class="flex gap-4">
           <RouterLink active-class="underline" to="/"> Home </RouterLink>
+          <RouterLink active-class="underline" to="/wand-graph"> Wand Graph </RouterLink>
           <RouterLink active-class="underline" to="/d3-graph-controller">
             d3-graph-controller
           </RouterLink>

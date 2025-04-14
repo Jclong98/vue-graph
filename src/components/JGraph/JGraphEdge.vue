@@ -3,6 +3,10 @@ import { useRafFn } from '@vueuse/core'
 import type { Edge, Node } from '.'
 import { computed } from 'vue'
 
+const emit = defineEmits<{
+  delete: []
+}>()
+
 const modelValue = defineModel<Edge>({ required: true })
 
 const midPoint = computed(() => ({
@@ -23,6 +27,7 @@ function moveTowardsLength(source: Node, target: Node) {
   const offsetX = (dx / currentLength) * scale
   const offsetY = (dy / currentLength) * scale
 
+  // move the nodes
   target.x -= offsetX
   target.y -= offsetY
 
@@ -33,6 +38,11 @@ function moveTowardsLength(source: Node, target: Node) {
 useRafFn(() => {
   moveTowardsLength(modelValue.value.source, modelValue.value.target)
 })
+
+const colors = computed(() => {
+  const c = modelValue.value.color
+  return `stroke-${c}-500`
+})
 </script>
 
 <template>
@@ -42,9 +52,10 @@ useRafFn(() => {
       :y1="modelValue.source.y"
       :x2="modelValue.target.x"
       :y2="modelValue.target.y"
-      stroke="black"
+      :class="colors"
+      :stroke-width="modelValue.width"
     />
-    <text
+    <!-- <text
       v-if="modelValue.label"
       class="select-none"
       :x="midPoint.x"
@@ -52,6 +63,14 @@ useRafFn(() => {
       text-anchor="middle"
     >
       {{ modelValue.label }}
-    </text>
+    </text> -->
+    <circle
+      :cx="midPoint.x"
+      :cy="midPoint.y"
+      r="10"
+      fill="transparent"
+      class="cursor-pointer hover:fill-red-400 active:fill-red-600"
+      @click="emit('delete')"
+    />
   </g>
 </template>

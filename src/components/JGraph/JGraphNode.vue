@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useMouse, useMousePressed, useRafFn } from '@vueuse/core'
 import type { Node } from './'
-import { reactive, useTemplateRef, watch } from 'vue'
+import { computed, reactive, useTemplateRef, watch } from 'vue'
 
 const modelValue = defineModel<Node>({ required: true })
 
@@ -37,6 +37,10 @@ useRafFn(() => {
 })
 
 // const coords = computed(() => `${modelValue.value.x.toFixed()}, ${modelValue.value.y.toFixed()}`)
+const colors = computed(() => {
+  const c = modelValue.value.color
+  return `fill-${c}-500 hover:fill-${c}-600 active:fill-${c}-700 focus-visible:stroke-${c}-900`
+})
 </script>
 
 <template>
@@ -46,7 +50,8 @@ useRafFn(() => {
       :cx="modelValue.x"
       :cy="modelValue.y"
       :r="modelValue.radius"
-      class="cursor-grab outline-0 fill-blue-500 hover:(fill-blue-600) active:(cursor-grabbing fill-blue-700) focus-visible:(stroke-2 stroke-blue-900)"
+      class="cursor-grab outline-0 active:cursor-grabbing focus-visible:stroke-2)"
+      :class="colors"
       tabindex="0"
     />
     <text
