@@ -2,7 +2,7 @@
 import JGraph from '@/components/JGraph/JGraph.vue'
 import { createEdge, createNode } from '@/components/JGraph'
 import type { Edge, Graph, Node } from '@/components/JGraph'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 const nodes: Node[] = [
   createNode({ id: '_start', x: 50, y: 250, label: 'Start', color: 'green' }),
@@ -34,14 +34,14 @@ const edges: Edge[] = [
   createEdge({ source: nodeById('4'), target: nodeById('6'), color: 'green' }),
 ]
 
-const graph = ref<Graph>({ nodes, edges })
+const graph = reactive<Graph>({ nodes, edges })
 
 const id1 = ref('')
 const id2 = ref('')
 function addEdge() {
   const source = nodeById(id1.value)
   const target = nodeById(id2.value)
-  graph.value.edges.push(createEdge({ source, target }))
+  graph.edges.push(createEdge({ source, target }))
   id1.value = ''
   id2.value = ''
 }
