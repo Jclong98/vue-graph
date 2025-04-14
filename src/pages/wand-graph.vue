@@ -45,15 +45,35 @@ function addEdge() {
   id1.value = ''
   id2.value = ''
 }
+
+const nodeId = ref('')
+const nodeLabel = ref('')
+
+function addNode() {
+  const id = nodeId.value
+  const label = nodeLabel.value
+  graph.nodes.push(createNode({ id, label, color: 'gray', x: 600, y: 300 }))
+  nodeId.value = ''
+  nodeLabel.value = ''
+}
 </script>
 
 <template>
   <div class="h-full w-full flex-col flex">
+    <!-- edge input -->
     <div class="flex gap-2 p-2">
       <input type="text" v-model="id1" class="border px-4 py-1 rounded w-16 border-black/50" />
       <i class="i-iconoir-arrow-right self-center"></i>
       <input type="text" v-model="id2" class="border px-4 py-1 rounded w-16 border-black/50" />
       <button class="btn" @click="addEdge">add edge</button>
+    </div>
+
+    <!-- new node -->
+    <div class="flex gap-2 p-2">
+      <input type="text" v-model="nodeId" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <i class="i-iconoir-plus self-center"></i>
+      <input type="text" v-model="nodeLabel" class="border px-4 py-1 rounded border-black/50" />
+      <button class="btn" @click="addNode">add node</button>
     </div>
 
     <JGraph v-model="graph" class="flex-1" />
