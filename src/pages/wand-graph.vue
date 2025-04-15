@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { colors } from '../../uno.config'
 import JGraph from '@/components/JGraph/JGraph.vue'
 import { createEdge, createNode } from '@/components/JGraph'
 import type { Edge, Graph, Node } from '@/components/JGraph'
@@ -39,10 +40,12 @@ const graph = reactive<Graph>({ nodes, edges })
 
 const id1 = ref('')
 const id2 = ref('')
+const color = ref('gray')
+const width = ref(2)
 function addEdge() {
   const source = nodeById(id1.value)
   const target = nodeById(id2.value)
-  graph.edges.push(createEdge({ source, target }))
+  graph.edges.push(createEdge({ source, target, color: color.value, width: width.value }))
   id1.value = ''
   id2.value = ''
 }
@@ -66,6 +69,15 @@ function addNode() {
       <JInput placeholder="id" v-model="id1" class="w-16" />
       <i class="i-iconoir-arrow-right self-center"></i>
       <JInput placeholder="id" v-model="id2" class="w-16" />
+
+      <!-- color select -->
+      <select v-model="color" class="border px-4 py-1 rounded border-black/50">
+        <option v-for="color in colors" :key="color" :value="color">{{ color }}</option>
+      </select>
+
+      <!-- width -->
+      <JInput placeholder="width" v-model.number="width" class="w-16" />
+
       <button class="btn" @click="addEdge">add edge</button>
     </div>
 
