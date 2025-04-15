@@ -54,7 +54,7 @@ const colors = computed(() => {
       :cx="modelValue.x"
       :cy="modelValue.y"
       :r="modelValue.radius"
-      class="cursor-grab outline-0 active:cursor-grabbing focus-visible:stroke-2)"
+      class="cursor-grab outline-0 active:cursor-grabbing focus-visible:stroke-3"
       :class="colors"
       tabindex="0"
     />
