@@ -40,7 +40,6 @@ useRafFn(() => {
   }
 })
 
-// const coords = computed(() => `${modelValue.value.x.toFixed()}, ${modelValue.value.y.toFixed()}`)
 const colors = computed(() => {
   const c = modelValue.value.color
   return `fill-${c}-500 hover:fill-${c}-600 active:fill-${c}-700 focus-visible:stroke-${c}-900`
@@ -74,12 +73,22 @@ const colors = computed(() => {
     <!-- id text -->
     <text
       v-if="modelValue.id"
-      class="pointer-events-none"
+      class="pointer-events-none select-none"
       :x="modelValue.x"
       :y="modelValue.y"
       text-anchor="middle"
     >
       {{ modelValue.id }}
+    </text>
+
+    <!-- coordinate text -->
+    <text
+      class="pointer-events-none select-none"
+      :x="modelValue.x"
+      :y="modelValue.y + modelValue.radius + 15"
+      text-anchor="middle"
+    >
+      {{ modelValue.x.toFixed(0) }}, {{ modelValue.y.toFixed(0) }}
     </text>
 
     <!-- delete button -->
