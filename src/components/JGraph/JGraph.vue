@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import JGraphNode from './JGraphNode.vue'
-import type { Graph } from './'
+import type { Graph, Node, Edge } from './'
 import JGraphEdge from './JGraphEdge.vue'
 import { useRafFn } from '@vueuse/core'
 
@@ -11,9 +11,30 @@ const { minDistance = 100, repulsionFactor = 0.1 } = defineProps<{
 
 const modelValue = defineModel<Graph>({ required: true })
 
-useRafFn(() => {
-  const nodes = modelValue.value.nodes
+const speed = 0.1
 
+function moveTowardsLength(edge: Edge) {
+  const { source, target } = edge
+
+  const dx = target.x - source.x
+  const dy = target.y - source.y
+  const currentLength = Math.sqrt(dx * dx + dy * dy)
+
+  if (currentLength === 0) return
+
+  const scale = (currentLength - edge.length) * speed
+  const offsetX = (dx / currentLength) * scale
+  const offsetY = (dy / currentLength) * scale
+
+  // move the nodes
+  target.x -= offsetX
+  target.y -= offsetY
+
+  source.x += offsetX
+  source.y += offsetY
+}
+
+function applyNodeRepulsion(nodes: Node[]) {
   for (const [i, nodeA] of nodes.entries()) {
     for (const nodeB of nodes.slice(i + 1)) {
       const dx = nodeB.x - nodeA.x
@@ -33,9 +54,30 @@ useRafFn(() => {
       }
     }
   }
+}
+
+useRafFn(() => {
+  applyNodeRepulsion(modelValue.value.nodes)
+
+  for (const edge of modelValue.value.edges) {
+    moveTowardsLength(edge)
+  }
 })
 
-function onNodeDelete(index: number) {
+function deleteEdge(edge: Edge) {
+  const index = modelValue.value.edges.findIndex(
+    (e) => e.source.id === edge.source.id && e.target.id === edge.target.id,
+  )
+  if (index === -1) throw new Error('Edge not found')
+
+  modelValue.value.edges.splice(index, 1)
+}
+
+function deleteNode(node: Node) {
+  // Find the index of the node to be deleted
+  const index = modelValue.value.nodes.findIndex((_node) => _node.id === node.id)
+  if (index === -1) throw new Error('Node not found')
+
   // remove the node and its edges
   const nodeId = modelValue.value.nodes[index].id
   modelValue.value.nodes.splice(index, 1)
@@ -52,7 +94,7 @@ function onNodeDelete(index: number) {
       :key="`${edge.source}-${edge.target}`"
       :model-value="edge"
       @update:model-value="modelValue.edges[index] = $event"
-      @delete="modelValue.edges.splice(index, 1)"
+      @delete="deleteEdge(edge)"
     />
 
     <JGraphNode
@@ -60,7 +102,7 @@ function onNodeDelete(index: number) {
       :key="node.id"
       :model-value="node"
       @update:model-value="modelValue.nodes[index] = $event"
-      @delete="onNodeDelete(index)"
+      @delete="deleteNode(node)"
     />
   </svg>
 </template>

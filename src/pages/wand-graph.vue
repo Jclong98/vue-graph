@@ -3,6 +3,7 @@ import JGraph from '@/components/JGraph/JGraph.vue'
 import { createEdge, createNode } from '@/components/JGraph'
 import type { Edge, Graph, Node } from '@/components/JGraph'
 import { reactive, ref } from 'vue'
+import JInput from '@/components/JInput.vue'
 
 const nodes: Node[] = [
   createNode({ id: '_start', x: 50, y: 250, label: 'Start', color: 'green' }),
@@ -62,17 +63,17 @@ function addNode() {
   <div class="h-full w-full flex-col flex">
     <!-- edge input -->
     <div class="flex gap-2 p-2">
-      <input type="text" v-model="id1" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <JInput placeholder="id" v-model="id1" class="w-16" />
       <i class="i-iconoir-arrow-right self-center"></i>
-      <input type="text" v-model="id2" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <JInput placeholder="id" v-model="id2" class="w-16" />
       <button class="btn" @click="addEdge">add edge</button>
     </div>
 
     <!-- new node -->
     <div class="flex gap-2 p-2">
-      <input type="text" v-model="nodeId" class="border px-4 py-1 rounded w-16 border-black/50" />
+      <JInput placeholder="id" v-model="nodeId" class="w-16" />
       <i class="i-iconoir-plus self-center"></i>
-      <input type="text" v-model="nodeLabel" class="border px-4 py-1 rounded border-black/50" />
+      <JInput placeholder="label" v-model="nodeLabel" />
       <button class="btn" @click="addNode">add node</button>
     </div>
 
