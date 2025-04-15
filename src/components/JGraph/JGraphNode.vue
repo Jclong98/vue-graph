@@ -49,6 +49,7 @@ const colors = computed(() => {
 
 <template>
   <g>
+    <!-- node -->
     <circle
       ref="circleElement"
       :cx="modelValue.x"
@@ -58,6 +59,8 @@ const colors = computed(() => {
       :class="colors"
       tabindex="0"
     />
+
+    <!-- label -->
     <text
       v-if="modelValue.label"
       class="select-none"
@@ -67,6 +70,8 @@ const colors = computed(() => {
     >
       {{ modelValue.label }}
     </text>
+
+    <!-- id text -->
     <text
       v-if="modelValue.id"
       class="pointer-events-none"
@@ -76,6 +81,8 @@ const colors = computed(() => {
     >
       {{ modelValue.id }}
     </text>
+
+    <!-- delete button -->
     <circle
       :cx="modelValue.x + modelValue.radius"
       :cy="modelValue.y - modelValue.radius"
