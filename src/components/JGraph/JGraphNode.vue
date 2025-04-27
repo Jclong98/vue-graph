@@ -82,14 +82,14 @@ const colors = computed(() => {
     </text>
 
     <!-- coordinate text -->
-    <text
+    <!-- <text
       class="pointer-events-none select-none"
       :x="modelValue.x"
       :y="modelValue.y + modelValue.radius + 15"
       text-anchor="middle"
     >
       {{ modelValue.x.toFixed(0) }}, {{ modelValue.y.toFixed(0) }}
-    </text>
+    </text> -->
 
     <!-- delete button -->
     <circle

@@ -11,6 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink active-class="underline" to="/d3-graph-controller">
           d3-graph-controller
         </RouterLink>
+        <RouterLink active-class="underline" to="/random"> random </RouterLink>
 
         <div class="flex-1"></div>
 
